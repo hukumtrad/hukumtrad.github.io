@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bagas Aditya - Dunia Antariksa</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000 url('https://images.unsplash.com/photo-1534796636912-3b95b3ab5986?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center;
+            background-size: cover;
+            color: #fff;
+            font-family: 'Orbitron', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            perspective: 1000px;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(65, 120, 255, 0.6);
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px #00a8ff, 0 0 20px #00a8ff;
+            color: #4facfe;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .highlight {
+            color: #ff9d00;
+            font-weight: bold;
+        }
+
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateY(0); }
+            50% { transform: translateY(-20px) rotateY(5deg); }
+        }
+
+        .comet {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+            border-radius: 50%;
+            z-index: 1;
+            animation: cometFly 15s linear infinite;
+        }
+
+        @keyframes cometFly {
+            0% { transform: translateX(-100px) translateY(50vh) rotate(-45deg); opacity: 1; }
+            100% { transform: translateX(100vw) translateY(-100px) rotate(-45deg); opacity: 0; }
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            margin-top: 1rem;
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 242, 254, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 242, 254, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    <div class="comet"></div>
+    
+    <div class="container">
+        <h1>🚀 BAGAS ADITYA</h1>
+        <p>Hai! Selamat datang di <span class="highlight">galaksi digital</span> saya.</p>
+        <p>Saya seorang penjelajah ruang maya yang senang menciptakan hal-hal baru di dunia teknologi.</p>
+        <p>Selamat menikmati perjalanan Anda di antara bintang-bintang ini!</p>
+        <a href="#" class="btn">Mulai Petualangan</a>
+    </div>
+
+    <script>
+        // Membuat bintang-bintang berkelap-kelip
+        const starsContainer = document.getElementById('stars');
+        const starsCount = 200;
+        
+        for (let i = 0; i < starsCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // Random position
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            
+            // Random size
+            const size = Math.random() * 3;
+            
+            // Random animation duration
+            const duration = 2 + Math.random() * 5;
+            
+            star.style.left = `${x}%`;
+            star.style.top = `${y}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.setProperty('--duration', `${duration}s`);
+            star.style.animationDelay = `${Math.random() * 5}s`;
+            
+            starsContainer.appendChild(star);
+        }
+
+        // Efek komet muncul secara acak
+        setInterval(() => {
+            const comet = document.createElement('div');
+            comet.classList.add('comet');
+            comet.style.left = '0';
+            comet.style.top = `${Math.random() * 100}vh`;
+            document.body.appendChild(comet);
+            
+            // Hapus komet setelah animasi selesai
+            setTimeout(() => {
+                comet.remove();
+            }, 15000);
+        }, 5000);
+    </script>
+</body>
+</html>
