@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bagas Aditya - Dunia Antariksa</title>
+    <title>Bagas Aditya & Danis - Dunia Antariksa</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         
@@ -14,11 +14,8 @@
             background-size: cover;
             color: #fff;
             font-family: 'Orbitron', sans-serif;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            overflow-x: hidden;
+            min-height: 100vh;
             text-align: center;
             perspective: 1000px;
         }
@@ -32,6 +29,8 @@
             box-shadow: 0 0 30px rgba(65, 120, 255, 0.6);
             transform-style: preserve-3d;
             animation: float 6s ease-in-out infinite;
+            max-width: 800px;
+            margin: 2rem auto;
         }
 
         h1 {
@@ -41,11 +40,17 @@
             color: #4facfe;
         }
 
+        h2 {
+            font-size: 2rem;
+            color: #ff9d00;
+            margin-top: 3rem;
+            text-shadow: 0 0 5px #ff9d00;
+        }
+
         p {
             font-size: 1.2rem;
             line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1.5rem;
         }
 
         .highlight {
@@ -98,7 +103,7 @@
         .btn {
             display: inline-block;
             padding: 0.8rem 2rem;
-            margin-top: 1rem;
+            margin: 1rem 0.5rem;
             background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
             color: white;
             text-decoration: none;
@@ -114,6 +119,89 @@
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(0, 242, 254, 0.6);
         }
+
+        /* Bagian Adik */
+        .little-bro {
+            position: relative;
+            margin: 3rem auto;
+            padding: 1.5rem;
+            background: rgba(255, 157, 0, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 157, 0, 0.3);
+            max-width: 600px;
+            animation: glow 3s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 5px rgba(255, 157, 0, 0.3); }
+            to { box-shadow: 0 0 20px rgba(255, 157, 0, 0.6); }
+        }
+
+        .bike {
+            position: relative;
+            width: 120px;
+            height: 80px;
+            margin: 0 auto 1rem;
+        }
+
+        .bike-wheel {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #ff9d00;
+            border-radius: 50%;
+            animation: wheelSpin 2s linear infinite;
+        }
+
+        .bike-wheel:nth-child(1) {
+            left: 0;
+            top: 40px;
+        }
+
+        .bike-wheel:nth-child(2) {
+            right: 0;
+            top: 40px;
+        }
+
+        .bike-frame {
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            border: 2px solid #ff9d00;
+            border-radius: 20px 20px 0 0;
+            top: 20px;
+            left: 20px;
+        }
+
+        .bike-handle {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ff9d00;
+            border-right: none;
+            border-bottom: none;
+            top: 20px;
+            left: 60px;
+            transform: rotate(45deg);
+        }
+
+        @keyframes wheelSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,157,0,0.8) 0%, rgba(255,157,0,0) 70%);
+            animation: planetOrbit linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes planetOrbit {
+            from { transform: rotate(0deg) translateX(100px) rotate(0deg); }
+            to { transform: rotate(360deg) translateX(100px) rotate(-360deg); }
+        }
     </style>
 </head>
 <body>
@@ -125,7 +213,24 @@
         <p>Hai! Selamat datang di <span class="highlight">galaksi digital</span> saya.</p>
         <p>Saya seorang penjelajah ruang maya yang senang menciptakan hal-hal baru di dunia teknologi.</p>
         <p>Selamat menikmati perjalanan Anda di antara bintang-bintang ini!</p>
-        <a href="#" class="btn">Mulai Petualangan</a>
+        <a href="#adik" class="btn">Lihat Adikku</a>
+        <a href="#" class="btn">Portfolio</a>
+    </div>
+
+    <div id="adik" class="container little-bro">
+        <h2>👶 DANIS WAHYUDI</h2>
+        <p>Ini adik kecilku yang lucu! <span class="highlight">Danis</span> baru berusia 5 tahun dan masih TK.</p>
+        
+        <div class="bike">
+            <div class="bike-wheel"></div>
+            <div class="bike-wheel"></div>
+            <div class="bike-frame"></div>
+            <div class="bike-handle"></div>
+        </div>
+        
+        <p>Kegemarannya adalah <span class="highlight">bermain sepeda</span> setiap sore.</p>
+        <p>Dia bercita-cita ingin menjadi astronot seperti kakaknya! 🌟</p>
+        <a href="#" class="btn" style="background: linear-gradient(45deg, #ff9d00 0%, #ff6b00 100%);">Kirim Pesan</a>
     </div>
 
     <script>
@@ -137,14 +242,9 @@
             const star = document.createElement('div');
             star.classList.add('star');
             
-            // Random position
             const x = Math.random() * 100;
             const y = Math.random() * 100;
-            
-            // Random size
             const size = Math.random() * 3;
-            
-            // Random animation duration
             const duration = 2 + Math.random() * 5;
             
             star.style.left = `${x}%`;
@@ -157,7 +257,7 @@
             starsContainer.appendChild(star);
         }
 
-        // Efek komet muncul secara acak
+        // Efek komet
         setInterval(() => {
             const comet = document.createElement('div');
             comet.classList.add('comet');
@@ -165,11 +265,22 @@
             comet.style.top = `${Math.random() * 100}vh`;
             document.body.appendChild(comet);
             
-            // Hapus komet setelah animasi selesai
             setTimeout(() => {
                 comet.remove();
             }, 15000);
         }, 5000);
+
+        // Planet mengorbit di bagian adik
+        const littleBroSection = document.querySelector('.little-bro');
+        for (let i = 0; i < 3; i++) {
+            const planet = document.createElement('div');
+            planet.classList.add('planet');
+            planet.style.width = `${10 + Math.random() * 20}px`;
+            planet.style.height = planet.style.width;
+            planet.style.animationDuration = `${20 + Math.random() * 30}s`;
+            planet.style.animationDelay = `${Math.random() * 10}s`;
+            littleBroSection.appendChild(planet);
+        }
     </script>
 </body>
 </html>
