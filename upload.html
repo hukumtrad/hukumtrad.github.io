@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Foto</title>
+    <title>Upload Foto Gallery</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
             text-align: center;
@@ -34,74 +34,124 @@
         #fileInput {
             display: none;
         }
-        .preview-container {
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
             margin-top: 20px;
         }
-        .image-preview {
-            max-width: 100%;
-            max-height: 400px;
-            margin-top: 15px;
+        .gallery-item {
+            position: relative;
+            width: 30%;
+            max-width: 300px;
+        }
+        .gallery-img {
+            width: 100%;
+            height: auto;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
-        .file-info {
-            margin-top: 10px;
-            color: #666;
+        .gallery-img:hover {
+            transform: scale(1.03);
+        }
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .back-btn {
+            background-color: #4285f4;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .back-btn:hover {
+            background-color: #3367d6;
         }
     </style>
 </head>
 <body>
-    <h1>Upload Foto</h1>
+    <h1>Gallery Foto Portfolio</h1>
     
     <div class="upload-container">
-        <p>Pilih foto dari perangkat Anda</p>
-        <input type="file" id="fileInput" accept="image/*">
-        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Pilih Foto</button>
+        <p>Pilih foto dari perangkat Anda (Max 12 foto)</p>
+        <input type="file" id="fileInput" accept="image/*" multiple>
+        <button class="upload-btn" onclick="document.getElementById('fileInput').click()">Tambah Foto</button>
     </div>
     
-    <div class="preview-container" id="previewContainer" style="display: none;">
-        <h2>Preview Foto</h2>
-        <img id="imagePreview" class="image-preview" src="#" alt="Preview gambar">
-        <div class="file-info">
-            <p id="fileName"></p>
-            <p id="fileSize"></p>
-        </div>
+    <div class="gallery-container" id="galleryContainer">
+        <!-- Foto-foto akan muncul di sini -->
     </div>
+
+    <button class="back-btn" onclick="window.location.href='index.html'">Kembali ke Halaman Utama</button>
 
     <script>
         const fileInput = document.getElementById('fileInput');
-        const previewContainer = document.getElementById('previewContainer');
-        const imagePreview = document.getElementById('imagePreview');
-        const fileName = document.getElementById('fileName');
-        const fileSize = document.getElementById('fileSize');
+        const galleryContainer = document.getElementById('galleryContainer');
+        const MAX_PHOTOS = 12;
+        let photoCount = 0;
 
         fileInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
+            const files = event.target.files;
             
-            if (file && file.type.match('image.*')) {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    imagePreview.src = e.target.result;
-                    previewContainer.style.display = 'block';
-                    
-                    // Menampilkan informasi file
-                    fileName.textContent = 'Nama file: ' + file.name;
-                    fileSize.textContent = 'Ukuran file: ' + formatFileSize(file.size);
+            if (files.length > 0) {
+                // Cek apakah melebihi max photos
+                if (photoCount + files.length > MAX_PHOTOS) {
+                    alert(`Maksimal ${MAX_PHOTOS} foto. Anda sudah mengupload ${photoCount} foto.`);
+                    return;
                 }
                 
-                reader.readAsDataURL(file);
-            } else {
-                alert('Silakan pilih file gambar yang valid (JPEG, PNG, dll).');
+                Array.from(files).forEach(file => {
+                    if (file && file.type.match('image.*')) {
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            addImageToGallery(e.target.result, file.name);
+                            photoCount++;
+                        }
+                        
+                        reader.readAsDataURL(file);
+                    } else {
+                        alert('File ' + file.name + ' bukan gambar yang valid. Hanya file JPEG, PNG, dll yang diterima.');
+                    }
+                });
             }
         });
 
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        function addImageToGallery(imageSrc, fileName) {
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
+            
+            const img = document.createElement('img');
+            img.src = imageSrc;
+            img.className = 'gallery-img';
+            img.alt = fileName;
+            
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-btn';
+            removeBtn.innerHTML = '×';
+            removeBtn.onclick = function() {
+                galleryContainer.removeChild(galleryItem);
+                photoCount--;
+            };
+            
+            galleryItem.appendChild(img);
+            galleryItem.appendChild(removeBtn);
+            galleryContainer.appendChild(galleryItem);
         }
     </script>
 </body>
